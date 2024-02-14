@@ -10,6 +10,7 @@
     <link rel="preload" href="fonts/exo2-regular.woff2" as="font" crossorigin="anonymous">
     <link rel="preload" href="fonts/exo2-semibold.woff2" as="font" crossorigin="anonymous">
     <link rel="preload" href="fonts/exo2-bold.woff2" as="font" crossorigin="anonymous">
+    <link rel="stylesheet" href="leaflet/leaflet.css">
     <link rel="stylesheet" href="css/style.min.css">
 </head>
 
@@ -169,7 +170,7 @@
                 Для удобства обращения из JS, вы можете добавить контейнерам id
                 или уникальные классы
             -->
-            <div class="container" style="display: none">
+            <div class="container" id="data-error-block" style="display: none">
                 <div class="message">
                     <span class="message__icon">
                         <svg width="60" height="60" aria-hidden="true">
@@ -183,16 +184,16 @@
                 </div>
             </div>
 
-            <div class="container">
+            <div class="container" id="data-result-block">
                 <div class="users-nav">
                     <div class="users-nav__tabs">
                         <div class="tabs no-transition-global tabs--toggle-buy-sell" data-tabs="parent"
                             data-delay="300">
                             <div class="tabs__controls" data-tabs="controls">
                                 <!-- При переключении с продавцов на покупателей и обратно нужно выделить активный пункт .is-active -->
-                                <button class="tabs__control btn is-active" type="button"
-                                    data-tabs="control">Купить</button>
-                                <button class="tabs__control btn" type="button" data-tabs="control">Продать</button>
+                                <button class="tabs__control tabs__control--type btn is-active" type="button"
+                                    data-tabs="buy">Купить</button>
+                                <button class="tabs__control tabs__control--type btn" type="button" data-tabs="sell">Продать</button>
                             </div>
                         </div>
                     </div>
@@ -208,9 +209,9 @@
                             data-delay="300">
                             <!-- При переключении с карты на список и обратно нужно выделить активный пункт .is-active -->
                             <div class="tabs__controls" data-tabs="controls">
-                                <button class="tabs__control btn is-active" type="button"
-                                    data-tabs="control">Cписок</button>
-                                <button class="tabs__control btn" type="button" data-tabs="control">Карта</button>
+                                <button class="tabs__control tabs__control--view btn is-active" type="button"
+                                    data-tabs="list">Cписок</button>
+                                <button class="tabs__control tabs__control--view btn" type="button" data-tabs="map">Карта</button>
                             </div>
                         </div>
                     </div>
@@ -242,7 +243,7 @@
                 Справедливо только для отображения типа "Список". В случае с картой
                 просто показывается пустая карта
             -->
-            <div class="container container--lightbackground" style="display: none">
+            <div class="container container--lightbackground" id="empty-data-block" style="display: none">
                 <div class="message message--noresults"><span class="message__icon">
                         <svg width="60" height="60" aria-hidden="true">
                             <use xlink:href="#icon-no-results"></use>
@@ -252,7 +253,7 @@
             </div>
 
             <!-- При переключении на карту нужно отобразить данный контейнер -->
-            <div class="container" style="display: none">
+            <div class="container" id="map-container" style="display: none">
                 <div class="map">
                     <!--
                         Карту нужно отрисовать в этот контейнер. Иконки для карты -
@@ -298,8 +299,9 @@
             <div class="modal__content">
                 <h2 class="modal__description">Покупка криптовалюты</h2>
                 <!-- Не забудьте указать верный action-атрибут -->
-                <form class="modal-buy" method="post">
-                    <!-- 
+                <form class="modal-buy" method="post" enctype="multipart/form-data"
+                action="https://cryptostar.grading.htmlacademy.pro/">
+                    <!--
                         Обратите внимание, что всем полям для отправки на сервер нужно указать
                         атрибуты name (их список вы найдёте в техзадании), а часть полей
                         вообще отправляется скрытыми
@@ -369,14 +371,14 @@
                             <div class="custom-input">
                                 <!-- В случае, если выбрана оплата наличными, поле нужно оставить пустым -->
                                 <label><span class="custom-input__label">Номер банковской карты пользователя</span>
-                                    <input type="number" placeholder="1234 5678 9012 3456" disabled>
+                                    <input type="number" placeholder="1234 5678 9012 3456" disabled readonly>
                                 </label>
                             </div>
                         </div>
                         <div class="modal__input-wrapper modal__input-wrapper--decorated">
                             <div class="custom-input">
                                 <label><span class="custom-input__label">Номер криптокошелька пользователя</span>
-                                    <input type="number" placeholder="08701943851-9832345" disabled>
+                                    <input type="number" placeholder="08701943851-9832345" disabled readonly>
                                 </label>
                             </div>
                         </div>
@@ -426,8 +428,9 @@
             <div class="modal__content">
                 <h2 class="modal__description">Продажа криптовалюты</h2>
                 <!-- Не забудьте указать верный action-атрибут -->
-                <form class="modal-sell" method="post">
-                    <!-- 
+                <form class="modal-sell" method="post" enctype="multipart/form-data"
+                action="https://cryptostar.grading.htmlacademy.pro/">
+                    <!--
                         Обратите внимание, что всем полям для отправки на сервер нужно указать
                         атрибуты name (их список вы найдёте в техзадании), а часть полей
                         вообще отправляется скрытыми
@@ -558,7 +561,7 @@
         <tr class="users-list__table-row">
             <td class="users-list__table-cell users-list__table-name">
                 <!-- Обратите внимание, что "звёздочка только" у верифицированных пользователей -->
-                <svg width="20" height="20" aria-hidden="true">
+                <svg id="user-list__icon-verified" width="20" height="20" aria-hidden="true">
                     <use xlink:href="#icon-star"></use>
                 </svg>
                 <span>John Smith</span>
@@ -575,7 +578,7 @@
                 </ul>
             </td>
             <td class="users-list__table-cell users-list__table-btn">
-                <button class="btn btn--greenborder" type="button">Обменять
+                <button class="btn btn--greenborder" id="users-list__button" type="button">Обменять
                 </button>
             </td>
         </tr>
@@ -611,6 +614,8 @@
         </div>
     </template>
 
+    <script src="leaflet/leaflet.js"></script>
+    <!-- <script src="pristine/pristine.min.js"></script> -->
     <script src="./js/main.js" type="module"></script>
 
 </body>
