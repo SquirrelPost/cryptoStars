@@ -1,16 +1,16 @@
 import { getUserData, getContractorsData, /*sendDataServer*/ } from './api.js';
 // import { createMarkers } from '../map/filter.js';
 import { isDataLoadingFailed, hideUserProfile } from '../utilities/error-messages.js';
-import { renderUserInfo } from './render-user.js';
-import { renderContractor } from './render-data.js';
+import { renderUserInfo } from '../user/render-user.js';
+import { createList } from '../contractors/render-data.js';
 
 const provideContractorsData = async () => {
   try {
     const contractors = await getContractorsData();
     // createMarkers(contractors);
-    contractors.forEach(contractor => {
-      renderContractor(contractor);
-    });
+    // console.log(contractors)
+    createList(contractors);
+    // console.log(contractors);
   } catch {
     isDataLoadingFailed();
   }

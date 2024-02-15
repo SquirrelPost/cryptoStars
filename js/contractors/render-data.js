@@ -1,6 +1,16 @@
+import { filterContractors } from '../contractors/filter.js';
+import { isDataEmpty } from '../utilities/error-messages.js';
+import { provideContractorsData } from '../data/server-data.js';
+
 const userListContainer = document.querySelector('.users-list__table-body');
 const userListTemplate = document.querySelector('#user-table-row__template')
   .content.querySelector('.users-list__table-row');
+const checkboxVerified = document.querySelector('#checked-users');
+
+let maxAmount;
+let filteredContractors;
+let currentItems;
+let dataContractors = [];
 
 const checkVerified = (userTableRow, isVerified) => {
   if (isVerified) {
@@ -10,14 +20,12 @@ const checkVerified = (userTableRow, isVerified) => {
   }
 };
 
-let maxAmount;
-
 const calcMaxAmount = (balance, exchangeRate, status) => {
   if (status === 'buyer') {
-    maxAmount = balance.amount;
+    maxAmount = Math.round(balance.amount);
   }
   if (status === 'seller') {
-    maxAmount = balance.amount * exchangeRate;
+    maxAmount = Math.round(balance.amount * exchangeRate);
   }
   return maxAmount;
 };
@@ -50,7 +58,6 @@ const renderContractor = (data) => {
     renderPayments(userTableRow, paymentMethods);
   } else {
     userTableRow.querySelector('.users-list__badges-list').remove();
-    userTableRow.querySelector('.users-list__table-payments').textContent = 'Отсутствуют';
   }
 
   const userListFragment = document.createDocumentFragment();
@@ -58,4 +65,34 @@ const renderContractor = (data) => {
   userListContainer.append(userListFragment);
 };
 
-export { renderContractor };
+const onCheckboxChange = () => {
+  userListContainer.innerHTML = '';
+  filterContractors(currentItems).forEach((contractor) => {
+    renderContractor(contractor);
+  });
+};
+
+const renderFilteredList = (contractors) => {
+  currentItems = contractors;
+  filteredContractors = filterContractors(currentItems);
+  filteredContractors.forEach((contractor) => {
+    renderContractor(contractor);
+  });
+  if (filteredContractors.length === 0) {
+    isDataEmpty();
+  }
+};
+
+const createList = (contractors) => {
+  dataContractors = contractors;
+  renderFilteredList(contractors);
+};
+
+const initSimilarItems = () => provideContractorsData();
+
+const renderListOfContractors = () => {
+  initSimilarItems();
+  checkboxVerified.addEventListener('change', onCheckboxChange);
+};
+
+export { createList, renderListOfContractors };

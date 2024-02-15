@@ -20,11 +20,10 @@ const isDataLoadingFailed = () => {
 // При отсутствии данных (если пользователь применил жёсткие фильтры или сервер вернул пустой массив данных)
 const emptyDataBlock = document.querySelector('#empty-data-block');
 const showEmptyDataBlock = () => {
-  emptyDataBlock.style.removeProperty('display');
+  emptyDataBlock.style.display = 'block';
 };
-
 const isDataEmpty = () => {
   showEmptyDataBlock();
 };
 
-export {isDataLoadingFailed, hideUserProfile, isDataEmpty };
+export { isDataLoadingFailed, hideUserProfile, isDataEmpty };
