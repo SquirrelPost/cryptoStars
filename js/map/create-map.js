@@ -45,11 +45,6 @@
 
 // let currentsMarkers;
 
-
-// const filtrateContractors = () => {
-// // не сделано!!!
-// };
-
 // const createMarkers = (data) => {
 //   currentsMarkers = data;
 //   filtrateContractors(currentsMarkers).forEach((contractor) => createSimilarMarker(contractor));

@@ -1,3 +1,5 @@
+import { onBuySellClick } from '../contractors/render-list.js';
+
 const tabTypeButtons = document.querySelectorAll('.tabs__control--type');
 
 const activateTypeButton = (evt) => {
@@ -10,6 +12,7 @@ const onTypeButtonClick = () => {
   tabTypeButtons.forEach((button) => {
     button.addEventListener('click', (evt) => {
       activateTypeButton(evt);
+      onBuySellClick();
     });
   });
 };
