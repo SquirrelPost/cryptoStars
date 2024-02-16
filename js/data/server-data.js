@@ -1,5 +1,4 @@
 import { getUserData, getContractorsData, /*sendDataServer*/ } from './api.js';
-// import { createMarkers } from '../map/filter.js';
 import { isDataLoadingFailed, hideUserProfile } from '../utilities/error-messages.js';
 import { renderUserInfo } from '../user/render-user.js';
 import { renderFilteredList } from '../contractors/render-list.js';
@@ -7,10 +6,7 @@ import { renderFilteredList } from '../contractors/render-list.js';
 const provideContractorsData = async () => {
   try {
     const contractors = await getContractorsData();
-    // createMarkers(contractors);
-    // console.log(contractors)
     renderFilteredList(contractors);
-    // console.log(contractors);
   } catch {
     isDataLoadingFailed();
   }

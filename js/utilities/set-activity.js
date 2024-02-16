@@ -1,9 +1,16 @@
 import { onBuySellClick } from '../contractors/render-list.js';
+import { map } from '../map/create-markers.js';
 
 const tabTypeButtons = document.querySelectorAll('.tabs__control--type');
+const tabViewButtons = document.querySelectorAll('.tabs__control--view');
+const usersList = document.querySelector('.users-list');
+const mapContainer = document.querySelector('#map-container');
+const toggleBuySellContainer = document.querySelector('.tabs--toggle-buy-sell');
+const toggleListMapContainer = document.querySelector('.tabs--toggle-list-map');
+const emptyDataBlock = document.querySelector('#empty-data-block');
 
 const activateTypeButton = (evt) => {
-  const buttonActive = document.querySelector('.tabs__control--type.is-active');
+  const buttonActive = toggleBuySellContainer.querySelector('.is-active');
   buttonActive.classList.remove('is-active');
   evt.target.classList.add('is-active');
 };
@@ -17,5 +24,37 @@ const onTypeButtonClick = () => {
   });
 };
 
-export { onTypeButtonClick };
+const activateViewButton = (evt) => {
+  const buttonActive = toggleListMapContainer.querySelector('.is-active');
+  buttonActive.classList.remove('is-active');
+  evt.target.classList.add('is-active');
+};
+
+const toggleListMap = () => {
+  const buttonActive = toggleListMapContainer.querySelector('.is-active');
+  if (buttonActive.getAttribute('data-tabs') === 'list') {
+    usersList.style.display = 'block';
+    mapContainer.style.display = 'none';
+  }
+  if (buttonActive.getAttribute('data-tabs') === 'map') {
+    mapContainer.style.display = 'block';
+    usersList.style.display = 'none';
+    map.invalidateSize(false);
+    if (emptyDataBlock.style.display === 'block') {
+      emptyDataBlock.style.display = 'none';
+    }
+  }
+};
+
+const onViewButtonClick = () => {
+  toggleListMap();
+  tabViewButtons.forEach((button) => {
+    button.addEventListener('click', (evt) => {
+      activateViewButton(evt);
+      toggleListMap();
+    });
+  });
+};
+
+export { onTypeButtonClick, onViewButtonClick };
 

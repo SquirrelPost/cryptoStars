@@ -52,9 +52,7 @@ const renderContractor = (data) => {
     userTableRow.querySelector('.users-list__badges-list').remove();
   }
 
-  const userListFragment = document.createDocumentFragment();
-  userListFragment.append(userTableRow);
-  userListContainer.append(userListFragment);
+  userListContainer.append(userTableRow);
 };
 
 export { userListContainer, renderContractor };

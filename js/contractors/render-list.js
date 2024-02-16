@@ -2,7 +2,7 @@ import { filterContractors } from './filter.js';
 import { isDataEmpty } from '../utilities/error-messages.js';
 import { provideContractorsData } from '../data/server-data.js';
 import { userListContainer, renderContractor } from './render-data.js';
-// import { renderMap } from '../map/render-map.js';
+import { createMarker, clearMarkers } from '../map/create-markers.js';
 
 const checkboxVerified = document.querySelector('#checked-users');
 
@@ -15,16 +15,24 @@ const renderFilteredList = (contractors) => {
   filteredContractors = filterContractors(currentItems);
   filteredContractors.forEach((contractor) => {
     renderContractor(contractor);
-    // renderMap(contractor);
+    if (contractor.coords) {
+      createMarker(contractor);
+    }
   });
   if (filteredContractors.length === 0) {
     isDataEmpty();
   }
 };
 
-const onCheckboxChange = () => renderFilteredList(currentItems);
+const onCheckboxChange = () => {
+  clearMarkers();
+  renderFilteredList(currentItems);
+};
 
-const onBuySellClick = () => renderFilteredList(currentItems);
+const onBuySellClick = () => {
+  clearMarkers();
+  renderFilteredList(currentItems);
+};
 
 const renderListOfContractors = () => {
   provideContractorsData();

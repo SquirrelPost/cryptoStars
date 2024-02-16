@@ -207,9 +207,9 @@
             <div class="tabs no-transition-global tabs--toggle-list-map" data-tabs="parent" data-delay="300">
               <!-- При переключении с карты на список и обратно нужно выделить активный пункт .is-active -->
               <div class="tabs__controls" data-tabs="controls">
-                <button class="tabs__control tabs__control--view btn is-active" type="button"
-                  data-tabs="list">Cписок</button>
-                <button class="tabs__control tabs__control--view btn" type="button" data-tabs="map">Карта</button>
+                <button class="tabs__control tabs__control--view btn is-active" type="button" data-tabs="list">Cписок</button>
+                <button class="tabs__control tabs__control--view btn" type="button"
+                  data-tabs="map">Карта</button>
               </div>
             </div>
           </div>
@@ -235,20 +235,20 @@
         </div>
       </div>
 
-        <!--
+      <!--
                 При отсутствии данных (если пользователь применил жёсткие фильтры
                 или сервер вернул пустой массив данных) нужно отобразить данный контейнер.
                 Справедливо только для отображения типа "Список". В случае с картой
                 просто показывается пустая карта
             -->
-            <div class="container container--lightbackground" id="empty-data-block" style="display: none">
-              <div class="message message--noresults"><span class="message__icon">
-                  <svg width="60" height="60" aria-hidden="true">
-                    <use xlink:href="#icon-no-results"></use>
-                  </svg></span>
-                <p class="message__paragraph">Нет подходящих объявлений</p>
-              </div>
-            </div>
+      <div class="container container--lightbackground" id="empty-data-block" style="display: none">
+        <div class="message message--noresults"><span class="message__icon">
+            <svg width="60" height="60" aria-hidden="true">
+              <use xlink:href="#icon-no-results"></use>
+            </svg></span>
+          <p class="message__paragraph">Нет подходящих объявлений</p>
+        </div>
+      </div>
 
       <!-- При переключении на карту нужно отобразить данный контейнер -->
       <div class="container" id="map-container" style="display: none">
@@ -588,17 +588,17 @@
     <div class="user-card">
       <span class="user-card__user-name">
         <!-- Обратите внимание, что "звёздочка только" у верифицированных пользователей -->
-        <svg width="20" height="20" aria-hidden="true">
+        <svg id="user-card__icon-verified" width="20" height="20" aria-hidden="true">
           <use xlink:href="#icon-star"></use>
         </svg>
         <span>Неопознанный енот</span>
       </span>
       <p class="user-card__cash-item"><span class="user-card__cash-label">Валюта</span><span
-          class="user-card__cash-data">KEKS</span></p>
-      <p class="user-card__cash-item"><span class="user-card__cash-label">Курс</span><span
-          class="user-card__cash-data">9 999 999 ₽</span></p>
-      <p class="user-card__cash-item"><span class="user-card__cash-label">Лимит</span><span
-          class="user-card__cash-data">9 900 ₽ – 9 900 000 000 ₽</span></p>
+          class="user-card__cash-data" id="users-card__currency">KEKS</span></p>
+      <p class="user-card__cash-item"><span class="user-card__cash-label">Курс</span><span class="user-card__cash-data"
+          id="users-card__exchangerate">9 999 999 ₽</span></p>
+      <p class="user-card__cash-item"><span class="user-card__cash-label">Лимит</span><span class="user-card__cash-data"
+          id="users-card__cashlimit">9 900 ₽ – 9 900 000 000 ₽</span></p>
       <ul class="user-card__badges-list">
         <li class="user-card__badges-item badge">BitTransfer</li>
         <li class="user-card__badges-item badge">CryptoEx</li>

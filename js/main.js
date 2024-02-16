@@ -1,10 +1,16 @@
 import './function.js';
-// import {renderMap, /*resetMap*/} from './map/render-map.js';
-import { provideUserData/*, provideContractorsData*/ } from './data/server-data.js';
-import { onTypeButtonClick } from './utilities/set-activity.js';
+import {renderMap} from './map/render-map.js';
+import { provideUserData } from './data/server-data.js';
+import { onTypeButtonClick, onViewButtonClick } from './utilities/set-activity.js';
 import { renderListOfContractors } from './contractors/render-list.js';
 
-// renderMap();
-onTypeButtonClick();
-provideUserData();
-renderListOfContractors();
+const initProject = () => {
+  onTypeButtonClick();
+  onViewButtonClick();
+  provideUserData();
+  renderMap();
+  renderListOfContractors();
+};
+
+initProject();
+

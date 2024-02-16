@@ -18,9 +18,14 @@ const checkActiveButton = (status) => {
   }
 };
 
-const filterContractors = (contractors) => contractors.filter(({ isVerified, status }) =>
+// const checkName = (userName) => {
+//   return userName === 'Рита';
+// };
+
+const filterContractors = (contractors) => contractors.filter(({ isVerified, status/*, userName*/ }) =>
   checkVerified(isVerified)
   && checkActiveButton(status)
+  // && checkName(userName)
 );
 
 export { filterContractors };
