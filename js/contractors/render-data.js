@@ -1,3 +1,5 @@
+import { onExchangeButtonClick } from '../modal/set-modal.js';
+
 const userListContainer = document.querySelector('.users-list__table-body');
 const userListTemplate = document.querySelector('#user-table-row__template')
   .content.querySelector('.users-list__table-row');
@@ -51,6 +53,10 @@ const renderContractor = (data) => {
   } else {
     userTableRow.querySelector('.users-list__badges-list').remove();
   }
+
+  userTableRow.querySelector('#exchange-button').addEventListener('click', () => {
+    onExchangeButtonClick(data);
+  });
 
   userListContainer.append(userTableRow);
 };

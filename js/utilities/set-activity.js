@@ -38,6 +38,8 @@ const toggleListMap = () => {
   }
   if (buttonActive.getAttribute('data-tabs') === 'map') {
     mapContainer.style.display = 'block';
+    mapContainer.style.position = 'relative';
+    mapContainer.style.zIndex = '1';
     usersList.style.display = 'none';
     map.invalidateSize(false);
     if (emptyDataBlock.style.display === 'block') {

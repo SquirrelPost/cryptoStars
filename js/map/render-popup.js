@@ -1,3 +1,5 @@
+import { onExchangeButtonClick } from '../modal/set-modal.js';
+
 const popupTemplate = document.querySelector('#map-baloon__template')
   .content.querySelector('.user-card');
 
@@ -51,6 +53,10 @@ const renderPopup = (data) => {
   } else {
     popup.querySelector('.user-card__badges-list').remove();
   }
+
+  popup.querySelector('#exchange-button').addEventListener('click', () => {
+    onExchangeButtonClick(data);
+  });
 
   return popup;
 };

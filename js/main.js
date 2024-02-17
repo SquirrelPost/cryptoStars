@@ -1,4 +1,3 @@
-import './function.js';
 import {renderMap} from './map/render-map.js';
 import { provideUserData } from './data/server-data.js';
 import { onTypeButtonClick, onViewButtonClick } from './utilities/set-activity.js';
@@ -13,4 +12,3 @@ const initProject = () => {
 };
 
 initProject();
-
