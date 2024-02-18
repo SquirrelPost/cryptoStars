@@ -45,6 +45,13 @@ const renderModalBuy = (currentContractor, user) => {
   modalTemplate.remove();
   modal.querySelector('[name="contractorId"]').value = id;
   modal.querySelector('[name="exchangeRate"]').value = exchangeRate;
+  modal.querySelector('[name="sendingAmount"]').setAttribute('min', minAmount);
+  const maxRubAmount = user.balances.find((balance) => balance.currency === 'RUB').amount;
+  modal.querySelector('[name="sendingAmount"]').setAttribute('max', maxRubAmount);
+  modal.querySelector('[name="receivingAmount"]').setAttribute('min', minAmount);
+  const maxKeksAmount = balance.amount;
+  modal.querySelector('[name="receivingAmount"]').setAttribute('max', maxKeksAmount);
+
   checkVerified(modal, isVerified);
   modal.querySelector('.transaction-info__data--name').textContent = userName;
   modal.querySelector('.transaction-info__data--exchangerate').textContent = `${exchangeRate} ₽`;

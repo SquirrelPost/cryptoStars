@@ -1,6 +1,8 @@
 import { isEscapeKey } from '../utilities/util.js';
 import { renderModalBuy } from './modal-buy.js';
-import {renderModalSell} from './modal-sell.js';
+import { renderModalSell } from './modal-sell.js';
+import { resetPristine } from '../form/validate-form.js';
+import { initForm } from '../form/form-handler.js';
 
 let modalContainer;
 let modalOverlay;
@@ -18,6 +20,7 @@ const checkStatus = (status) => {
   } else {
     modalContainer = document.querySelector('.modal--sell');
   }
+  return modalContainer;
 };
 
 const showModal = () => {
@@ -28,6 +31,7 @@ const showModal = () => {
   document.addEventListener('keydown', onModalEscKeydown);
   modalCloseButton = modalContainer.querySelector('.modal__close-btn');
   modalCloseButton.addEventListener('click', onCloseButtonClick);
+  initForm();
 };
 
 const renderModal = (currentContractor) => {
@@ -48,7 +52,7 @@ const onExchangeButtonClick = (currentContractor) => {
 const hideModal = () => {
   modalForm = modalContainer.querySelector('.modal__form');
   modalForm.reset();
-  // pristine.reset();
+  resetPristine();
   modalContainer.style.display = 'none';
   document.body.classList.remove('scroll-lock');
   modalOverlay.removeEventListener('click', onModalOverlayClick);

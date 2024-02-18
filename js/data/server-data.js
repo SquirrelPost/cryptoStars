@@ -1,8 +1,26 @@
-import { getUserData, getContractorsData, /*sendDataServer*/ } from './api.js';
-import { isDataLoadingFailed, hideUserProfile } from '../utilities/error-messages.js';
+import { getUserData, getContractorsData, sendDataServer } from './api.js';
+import { isDataLoadingFailed, hideUserProfile, renderStatusMessage } from '../utilities/error-messages.js';
 import { renderUserInfo } from '../user/render-user.js';
 import { renderFilteredList } from '../contractors/render-list.js';
-import {sendUserInfoToModal} from '../modal/set-modal.js'
+import { sendUserInfoToModal } from '../modal/set-modal.js'
+import { resetModalFormBuy } from '../form/form-handler.js';
+
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
+
+const submitButton = document.querySelector('.modal__submit');
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
 
 const provideContractorsData = async () => {
   try {
@@ -23,4 +41,17 @@ const provideUserData = async () => {
   }
 };
 
-export { provideContractorsData, provideUserData };
+const sendData = async (formElement) => {
+  try {
+    blockSubmitButton();
+    await sendDataServer(new FormData(formElement));
+    resetModalFormBuy();
+    renderStatusMessage('success');
+  } catch {
+    renderStatusMessage('error');
+  } finally {
+    unblockSubmitButton();
+  }
+};
+
+export { provideContractorsData, provideUserData, sendData };
