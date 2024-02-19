@@ -39,7 +39,7 @@ const renderPayments = (paymentMethodsList, paymentMethods) => {
 };
 
 const renderModalSell = (currentContractor, user) => {
-  const { balance, exchangeRate, isVerified, minAmount, wallet, status, userName, id } = currentContractor;
+  const { exchangeRate, isVerified, minAmount, wallet, status, userName, id } = currentContractor;
   const { paymentMethods} = user;
   const modal = modalTemplate.cloneNode(true);
   modalTemplate.remove();
@@ -49,14 +49,14 @@ const renderModalSell = (currentContractor, user) => {
   const maxRubAmount = user.balances.find((balance) => balance.currency === 'KEKS').amount;
   modal.querySelector('[name="sendingAmount"]').setAttribute('max', maxRubAmount);
   modal.querySelector('[name="receivingAmount"]').setAttribute('min', minAmount);
-  const maxKeksAmount = balance.amount;
+  const maxKeksAmount = currentContractor.balance.amount;
   modal.querySelector('[name="receivingAmount"]').setAttribute('max', maxKeksAmount);
 
   checkVerified(modal, isVerified);
   modal.querySelector('.transaction-info__data--name').textContent = userName;
   modal.querySelector('.transaction-info__data--exchangerate').textContent = `${exchangeRate} ₽`;
   modal.querySelector('.transaction-info__data--cashlimit').textContent =
-    `${minAmount} ₽ - ${calcMaxAmount(balance, exchangeRate, status)} ₽`;
+    `${minAmount} ₽ - ${calcMaxAmount(currentContractor.balance, exchangeRate, status)} ₽`;
 
   const accountNumber = modal.querySelector('[name="accountNumber"]');
   const paymentMethodsList = modal.querySelector('[name="paymentMethod"]');

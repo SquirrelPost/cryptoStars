@@ -2,7 +2,7 @@ import { getUserData, getContractorsData, sendDataServer } from './api.js';
 import { isDataLoadingFailed, hideUserProfile, renderStatusMessage } from '../utilities/error-messages.js';
 import { renderUserInfo } from '../user/render-user.js';
 import { renderFilteredList } from '../contractors/render-list.js';
-import { sendUserInfoToModal } from '../modal/set-modal.js'
+import { sendUserInfoToModal } from '../modal/set-modal.js';
 import { resetModalFormBuy } from '../form/form-handler.js';
 
 const SubmitButtonText = {
@@ -26,7 +26,7 @@ const provideContractorsData = async () => {
   try {
     const contractors = await getContractorsData();
     renderFilteredList(contractors);
-  } catch {
+  } catch (e) {
     isDataLoadingFailed();
   }
 };
@@ -36,7 +36,7 @@ const provideUserData = async () => {
     const user = await getUserData();
     renderUserInfo(user);
     sendUserInfoToModal(user);
-  } catch {
+  } catch (e) {
     hideUserProfile();
   }
 };
@@ -47,7 +47,7 @@ const sendData = async (formElement) => {
     await sendDataServer(new FormData(formElement));
     resetModalFormBuy();
     renderStatusMessage('success');
-  } catch {
+  } catch (e) {
     renderStatusMessage('error');
   } finally {
     unblockSubmitButton();

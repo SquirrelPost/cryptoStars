@@ -1,8 +1,8 @@
 const CORRECT_PASSWORD = 180712;
 
 const modalForm = document.querySelector('.modal__form');
-const sendingAmountField = modalForm.querySelector('.sendingAmount');
-const receivingAmountField = modalForm.querySelector('.receivingAmount');
+const sendingAmountField = modalForm.querySelector('[name="sendingAmount"]');
+const receivingAmountField = modalForm.querySelector('[name="receivingAmount"]');
 const paymentPasswordField = modalForm.querySelector('[name="paymentPassword"]');
 const exchangeRateField = modalForm.querySelector('[name="exchangeRate"]');
 
@@ -41,37 +41,27 @@ const checkErrors = () => {
   pristine.addValidator(
     sendingAmountField,
     checkSendingAmountMax,
-    ERROR_MESSAGES.sendingMax,
-    1,
-    true
+    ERROR_MESSAGES.sendingMax
   );
   pristine.addValidator(
     sendingAmountField,
     checkSendingAmountMin,
-    ERROR_MESSAGES.sendingMin,
-    1,
-    true
+    ERROR_MESSAGES.sendingMin
   );
   pristine.addValidator(
     receivingAmountField,
     checkReceivingAmountMax,
-    ERROR_MESSAGES.receivingMax,
-    1,
-    true
+    ERROR_MESSAGES.receivingMax
   );
   pristine.addValidator(
     receivingAmountField,
     checkReceivingAmountMin,
-    ERROR_MESSAGES.receivingMin,
-    1,
-    true
+    ERROR_MESSAGES.receivingMin
   );
   pristine.addValidator(
     paymentPasswordField,
     checkPaymentPassword,
-    ERROR_MESSAGES.password,
-    1,
-    true
+    ERROR_MESSAGES.password
   );
 };
 
